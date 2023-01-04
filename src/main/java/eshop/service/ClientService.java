@@ -102,8 +102,11 @@ public class ClientService {
 		return clientRepo.findAll(page.previousOrFirstPageable());
 	}
 	
-	public Optional<Client> getClientCommandes(Long id) {
-		return clientRepo.findByIdFetchCommandes(id);		
+	public Client getClientCommandes(Client client) {
+		checkClientIsNotNull(client);
+		return clientRepo.findByIdFetchCommandes(client.getId()).orElseThrow(() -> {
+			throw new ClientException("Aucune commandes pour ce client");
+		});		
 	}
 	
 	

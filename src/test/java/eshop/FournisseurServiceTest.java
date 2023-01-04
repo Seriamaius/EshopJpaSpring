@@ -27,7 +27,6 @@ public class FournisseurServiceTest {
     public void insert() {
         Fournisseur f = new Fournisseur("a", "test2",new Adresse("ah","b","c","d"), "test@test.fr");
         fournisseurService.create(f);
-        System.out.println(f.getId());
         assertNotNull(fournisseurService.getById(f.getId()));
     }
 

@@ -1,17 +1,19 @@
 package eshop.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import eshop.entity.Adresse;
 import eshop.entity.Fournisseur;
 import eshop.exception.FournisseurException;
 import eshop.exception.IdException;
 import eshop.repository.FournisseurRepository;
 import eshop.repository.ProduitRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class FournisseurService {
@@ -24,9 +26,6 @@ public class FournisseurService {
 
     public void create(Fournisseur fournisseur) {
         checkFournisseurIsNotNull(fournisseur);
-/*        if (fournisseur.getId() == null) {
-            throw new FournisseurException("id is null"); POURQUOI IL EST LA BORDEL
-        }*/
         if (fournisseur.getNom() == null || fournisseur.getNom().isEmpty()) {
             throw new FournisseurException("nom is null");
         }
@@ -41,6 +40,13 @@ public class FournisseurService {
             throw new FournisseurException("fournisseur null");
         }
     }
+    
+    public Fournisseur getFournisseurProduits(Fournisseur fournisseur) {
+    	checkFournisseurIsNotNull(fournisseur);
+    	return fournisseurRepository.findByIdFetchProduits(fournisseur.getId()).orElseThrow(() -> {
+    		throw new FournisseurException("Aucun produits pour ce fournisseur");
+    	});
+    }
 
     public Fournisseur getById(Long id) {
         if (id == null) {
@@ -49,6 +55,15 @@ public class FournisseurService {
         return fournisseurRepository.findById(id).orElseThrow(() -> {
             throw new FournisseurException("Fournisseur unknown");
         });
+    }
+    
+    public Fournisseur getByContact(String contact) {
+    	if (contact == null || contact.isEmpty()) {
+    		throw new FournisseurException("Contact vide");
+    	}
+    	return fournisseurRepository.findByContact(contact).orElseThrow(() -> {
+    		throw new FournisseurException("Contact inconnu");
+    	});
     }
 
     public void delete(Fournisseur fournisseur) {
@@ -62,7 +77,6 @@ public class FournisseurService {
 
     private void deleteById(Long id) {
         Fournisseur fournisseur = getById(id);
-<<<<<<< HEAD
         produitRepository.updateByfournisseurSetfournisseurToNull(fournisseur);
         fournisseurRepository.delete(fournisseur);
     }
@@ -95,9 +109,6 @@ public class FournisseurService {
     public Fournisseur update(Fournisseur fournisseur) {
         Fournisseur fournisseurEnBase = getById(fournisseur.getId());
         fournisseurEnBase.setNom(fournisseur.getNom() != null ? fournisseur.getNom() : fournisseurEnBase.getNom());
-/*        fournisseurEnBase.setNom(formateur.getNom() != null ? formateur.getNom() : fournisseurEnBase.getNom());
-        fournisseurEnBase.setEmail(formateur.getEmail());
-        fournisseurEnBase.setTelephone(formateur.getTelephone());*/
         if (fournisseur.getAdresse() != null) {
             fournisseurEnBase.setAdresse(
                     new Adresse(
@@ -108,9 +119,6 @@ public class FournisseurService {
         } else {
             fournisseurEnBase.setAdresse(null);
         }
-//        fournisseurEnBase.setCout(formateur.getCout());
         return fournisseurRepository.save(fournisseurEnBase);
-=======
->>>>>>> 38ee35cae3aa8b698539a0378724e6d4bec68712
     }
 }
