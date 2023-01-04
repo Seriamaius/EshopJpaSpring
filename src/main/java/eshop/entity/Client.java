@@ -32,17 +32,36 @@ public class Client extends Compte {
 	private Civilite civilite;
 	@OneToMany(mappedBy = "client")
 	private List<Commande> commandes;
+	@Column(name="password")
+	private String password;
 
 	public Client() {
 
 	}
-
-	public Client(String nom, String email, Adresse adresse, String prenom, LocalDate dateInscription,
-			Civilite civilite) {
+	
+	public Client(Civilite civilite, String nom, String prenom, String email, Adresse adresse, LocalDate dateInscription, String password) {
 		super(nom, email, adresse);
 		this.prenom = prenom;
 		this.dateInscription = dateInscription;
 		this.civilite = civilite;
+		this.password = password;
+	}
+
+	public Client(Civilite civilite, String nom, String prenom, String email, Adresse adresse, LocalDate dateInscription) {
+		super(nom, email, adresse);
+		this.prenom = prenom;
+		this.dateInscription = dateInscription;
+		this.civilite = civilite;
+	}
+	
+	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getPrenom() {

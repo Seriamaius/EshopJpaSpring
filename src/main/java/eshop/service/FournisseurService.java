@@ -62,6 +62,7 @@ public class FournisseurService {
 
     private void deleteById(Long id) {
         Fournisseur fournisseur = getById(id);
+<<<<<<< HEAD
         produitRepository.updateByfournisseurSetfournisseurToNull(fournisseur);
         fournisseurRepository.delete(fournisseur);
     }
@@ -109,5 +110,7 @@ public class FournisseurService {
         }
 //        fournisseurEnBase.setCout(formateur.getCout());
         return fournisseurRepository.save(fournisseurEnBase);
+=======
+>>>>>>> 38ee35cae3aa8b698539a0378724e6d4bec68712
     }
 }
