@@ -2,6 +2,7 @@ package eshop.service;
 
 import eshop.entity.Fournisseur;
 import eshop.exception.FournisseurException;
+import eshop.exception.IdException;
 import eshop.repository.FournisseurRepository;
 import eshop.repository.ProduitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,26 @@ public class FournisseurService {
         }
     }
 
+    public Fournisseur getById(Long id) {
+        if (id == null) {
+            throw new IdException();
+        }
+        return fournisseurRepository.findByFetchproduitsCommeReferent(id).orElseThrow(() -> {
+            throw new FournisseurException("Fourni unknown");
+        });
+    }
 
+    public void delete(Fournisseur fournisseur) {
+        checkFournisseurIsNotNull(fournisseur);
+        deleteById(fournisseur.getId());
+    }
+
+    public void delete(Long id) {
+        deleteById(id);
+    }
+
+    private void deleteById(Long id) {
+        Fournisseur fournisseur = getById(id);
+        fournisseurRepository.updateByReferent
+    }
 }
