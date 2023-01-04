@@ -14,11 +14,11 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     @Modifying
     @Transactional
     @Query("update Produit f set f.fournisseur=null where f.fournisseur=:fournisseur")
-    void updateByfournisseurSetfournisseurToNull(@Param("fournisseur")Produit referent);
+    void updateByfournisseurSetfournisseurToNull(@Param("fournisseur")Fournisseur fournisseur);
 
     @Modifying
     @Transactional
     @Query("delete Produit f where f.fournisseur=:fournisseur")
-    void deleteByFournisseur(@Param("fournisseur")Produit referent);
+    void deleteByFournisseur(@Param("fournisseur")Fournisseur fournisseur);
 
 }

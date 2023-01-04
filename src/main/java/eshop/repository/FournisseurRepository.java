@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> {
 
-    List<Fournisseur> findByInterneIsTrue();
+    List<Fournisseur> findByProduitsIsTrue();
 
     List<Fournisseur> findByNom(String nom);
 
@@ -21,5 +21,7 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
     Page<Fournisseur> findByNomContaining(String nom, Pageable pageable);
 
     @Query("select f from Fournisseur f left join fetch f.produits where f.id=:id")
-    Optional<Fournisseur> findByFetchproduitsCommeReferent(@Param("id") Long id);
+    Optional<Fournisseur> findByFetchproduitsCommeproduits(@Param("id") Long id);
+
+
 }
