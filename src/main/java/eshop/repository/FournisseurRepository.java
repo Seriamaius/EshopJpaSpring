@@ -12,8 +12,6 @@ import java.util.Optional;
 
 public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> {
 
-    List<Fournisseur> findByInterneIsTrue();
-
     List<Fournisseur> findByNom(String nom);
 
     List<Fournisseur> findByNomContaining(String nom);

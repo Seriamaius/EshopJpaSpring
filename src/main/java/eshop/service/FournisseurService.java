@@ -58,6 +58,5 @@ public class FournisseurService {
 
     private void deleteById(Long id) {
         Fournisseur fournisseur = getById(id);
-        fournisseurRepository.updateByReferent
     }
 }
