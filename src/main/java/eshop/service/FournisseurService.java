@@ -28,6 +28,7 @@ public class FournisseurService {
             throw new FournisseurException("email is null");
         }
         fournisseurRepository.save(fournisseur);
+        //prout
     }
 
     private void checkFournisseurIsNotNull(Fournisseur fournisseur) {
